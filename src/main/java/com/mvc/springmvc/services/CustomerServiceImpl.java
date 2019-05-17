@@ -1,54 +1,43 @@
 package com.mvc.springmvc.services;
 
 import com.mvc.springmvc.domain.Customer;
+import com.mvc.springmvc.domain.DomainObject;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
-public class CustomerServiceImpl implements CustomerService {
-
-    private Map<Integer, Customer> customers;
+public class CustomerServiceImpl extends AbstractMapService implements CustomerService {
 
     public CustomerServiceImpl() {
-        loadCustomers();
+        loadDomainObjects();
     }
 
     @Override
-    public Customer getCustomerById(Integer id) {
-        return customers.get(id);
+    public List<DomainObject> listAll() {
+        return super.listAll();
     }
 
     @Override
-    public List<Customer> getAllCustomers() {
-        return new ArrayList<>(customers.values());
+    public Customer getById(Integer id){
+        return (Customer)super.getById(id);
     }
 
     @Override
-    public Customer saveOrUpdateCustomer(Customer customer) {
-        if (customer != null) {
-            if (customer.getId() == null) {
-                customer.setId(getNextKey());
-            }
-            customers.put(customer.getId(), customer);
-
-            return customer;
-        } else {
-            throw new RuntimeException("Customer can't be empty");
-        }
+    public Customer saveOrUpdate(Customer domainObject) {
+        return (Customer)super.saveOrUpdate(domainObject);
     }
 
     @Override
-    public void deleteCustomer(Integer id) {
-        customers.remove(id);
+    public void delete(Integer id){
+        super.delete(id);
     }
 
-    private Integer getNextKey() {
-        return Collections.max(customers.keySet()) + 1;
-    }
 
-    private void loadCustomers() {
-        customers = new HashMap<>();
+
+    @Override
+    protected void loadDomainObjects() {
+        domainMap = new HashMap<>();
 
         Customer customer1 = new Customer();
         customer1.setId(1);
@@ -65,6 +54,6 @@ public class CustomerServiceImpl implements CustomerService {
 
          */
 
-        customers.put(customer1.getId(), customer1);
+        domainMap.put(customer1.getId(), customer1);
     }
 }

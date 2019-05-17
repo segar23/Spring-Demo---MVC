@@ -1,6 +1,6 @@
 package com.mvc.springmvc.domain;
 
-public class Customer {
+public class Customer implements DomainObject{
 
     private Integer id;
     private String firstName;
