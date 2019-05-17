@@ -49,5 +49,22 @@ public class CustomerServiceImpl implements CustomerService {
 
     private void loadCustomers() {
         customers = new HashMap<>();
+
+        Customer customer1 = new Customer();
+        customer1.setId(1);
+        customer1.setFirstName("Sebastian");
+        customer1.setLastName("Garces");
+        /*
+        customer1.setEmail("segarces23@gmail.com");
+        customer1.setPhoneNumber("7654133256");
+        customer1.setAddressLine1("2081 Malibu Dr");
+        customer1.setAddressLine2("");
+        customer1.setCity("West Lafayette");
+        customer1.setState("IN");
+        customer1.setZipCode("47906");
+
+         */
+
+        customers.put(customer1.getId(), customer1);
     }
 }
