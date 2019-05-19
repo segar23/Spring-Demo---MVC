@@ -28,7 +28,7 @@ public class ProductController {
         return "product/list";
     }
 
-    @RequestMapping("/{id}")
+    @RequestMapping("/show/{id}")
     public String getProduct(@PathVariable Integer id, Model model){
 
         model.addAttribute("product", productService.getById(id));
@@ -45,7 +45,7 @@ public class ProductController {
     @RequestMapping(method = RequestMethod.POST)
     public String saveOrUpdateProduct(Product product){
         Product savedProduct = productService.saveOrUpdate(product);
-        return "redirect:/product/" + savedProduct.getId();
+        return "redirect:/product/show/" + savedProduct.getId();
     }
 
     @RequestMapping("/edit/{id}")
