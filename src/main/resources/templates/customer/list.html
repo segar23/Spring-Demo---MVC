@@ -17,6 +17,7 @@
 <body>
 <div class="container">
     <h2>Customer List</h2>
+    <div th:if="${not #lists.isEmpty(customers)}">
     <table class="table table-striped">
         <tr>
             <th>Id</th>
@@ -49,6 +50,7 @@
             <td><a th:href="${'/customer/delete/' + customer.id}">Delete</a></td>
         </tr>
     </table>
+    </div>
     <a th:href="@{/customer/new}">New Customer</a>
 </div>
 </body>

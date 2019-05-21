@@ -2,11 +2,13 @@ package com.mvc.springmvc.services;
 
 import com.mvc.springmvc.domain.Customer;
 import com.mvc.springmvc.domain.DomainObject;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
+@Profile("map")
 public class CustomerServiceImpl extends AbstractMapService implements CustomerService {
 
     public CustomerServiceImpl() {
