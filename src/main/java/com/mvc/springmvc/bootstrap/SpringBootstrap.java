@@ -1,6 +1,8 @@
 package com.mvc.springmvc.bootstrap;
 
+import com.mvc.springmvc.domain.Customer;
 import com.mvc.springmvc.domain.Product;
+import com.mvc.springmvc.services.CustomerService;
 import com.mvc.springmvc.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
@@ -14,13 +16,22 @@ public class SpringBootstrap implements ApplicationListener<ContextRefreshedEven
 
     private ProductService productService;
 
+    private CustomerService customerService;
+
     @Autowired
     public void setProductService(ProductService productService) {
         this.productService = productService;
     }
 
+    @Autowired
+    public void setCustomerService(CustomerService customerService) {
+        this.customerService = customerService;
+    }
+
+
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
+        loadCustomers();
         loadProducts();
     }
 
@@ -59,5 +70,16 @@ public class SpringBootstrap implements ApplicationListener<ContextRefreshedEven
         product5.setImageUrl("http://example.com/product5");
 
         productService.saveOrUpdate(product5);
+    }
+
+    public void loadCustomers() {
+        Customer customer1 = new Customer();
+        customer1.setFirstName("Sebastian");
+        customer1.setLastName("Garces");
+        customer1.setPhoneNumber("7654133256");
+        customer1.setEmail("segarces23");
+        customer1.setAddressLine1("2081 Malibu Dr");
+
+        customerService.saveOrUpdate(customer1);
     }
 }

@@ -1,6 +1,5 @@
 package com.mvc.springmvc.services;
 
-import com.mvc.springmvc.config.JpaIntegrationConfig;
 import com.mvc.springmvc.domain.Product;
 import org.junit.Test;
 import org.junit.runner.RunWith;
