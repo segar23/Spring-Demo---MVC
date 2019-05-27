@@ -1,6 +1,7 @@
-package com.mvc.springmvc.services;
+package com.mvc.springmvc.services.jpaservices;
 
 import com.mvc.springmvc.domain.Product;
+import com.mvc.springmvc.services.ProductService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 

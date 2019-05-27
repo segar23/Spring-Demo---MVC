@@ -1,7 +1,9 @@
-package com.mvc.springmvc.services;
+package com.mvc.springmvc.services.mapservices;
 
 import com.mvc.springmvc.domain.Customer;
 import com.mvc.springmvc.domain.DomainObject;
+import com.mvc.springmvc.services.CustomerService;
+import com.mvc.springmvc.services.mapservices.AbstractMapService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 

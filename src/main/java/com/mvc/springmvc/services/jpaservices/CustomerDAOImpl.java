@@ -1,6 +1,9 @@
-package com.mvc.springmvc.services;
+package com.mvc.springmvc.services.jpaservices;
 
 import com.mvc.springmvc.domain.Customer;
+import com.mvc.springmvc.services.CustomerService;
+import com.mvc.springmvc.services.security.EncryptionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +17,13 @@ import java.util.List;
 public class CustomerDAOImpl implements CustomerService {
 
     EntityManagerFactory emf;
+
+    EncryptionService encryptionService;
+
+    @Autowired
+    public void setEncryptionService(EncryptionService encryptionService) {
+        this.encryptionService = encryptionService;
+    }
 
     @PersistenceUnit
     public void setEmf(EntityManagerFactory emf) {
@@ -39,6 +49,12 @@ public class CustomerDAOImpl implements CustomerService {
         EntityManager em = emf.createEntityManager();
 
         em.getTransaction().begin();
+
+        if (domainObject.getUser() != null && domainObject.getUser().getPassword() != null){
+            domainObject.getUser().setEncryptedPassword(
+                    encryptionService.encryptString(domainObject.getUser().getPassword()));
+        }
+
         Customer savedCustomer = em.merge(domainObject);
         em.getTransaction().commit();
 
