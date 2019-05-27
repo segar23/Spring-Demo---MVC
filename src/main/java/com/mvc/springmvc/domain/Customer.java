@@ -22,7 +22,7 @@ public class Customer implements DomainObject{
     private String state;
     private String zipCode;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private User user;
 
     public Integer getId() {
@@ -119,5 +119,6 @@ public class Customer implements DomainObject{
 
     public void setUser(User user) {
         this.user = user;
+
     }
 }

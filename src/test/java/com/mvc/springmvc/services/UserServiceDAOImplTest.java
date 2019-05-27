@@ -1,5 +1,6 @@
 package com.mvc.springmvc.services;
 
+import com.mvc.springmvc.domain.Customer;
 import com.mvc.springmvc.domain.User;
 import org.junit.Assert;
 import org.junit.Test;
@@ -35,5 +36,27 @@ public class UserServiceDAOImplTest {
 
         System.out.println("Encrypted Password");
         System.out.println(savedUser.getEncryptedPassword());
+    }
+
+    @Test
+    public void testSaveOfUserWithCustomer () throws Exception{
+        User user = new User();
+
+        user.setUsername("segar23");
+        user.setPassword("pass69");
+
+        Customer customer = new Customer();
+
+        customer.setFirstName("John");
+        customer.setLastName("Doe");
+
+        user.setCustomer(customer);
+
+        User savedUser = userService.saveOrUpdate(user);
+
+        assert savedUser.getId() != null;
+        assert savedUser.getVersion() != null;
+        assert savedUser.getCustomer() != null;
+        assert savedUser.getCustomer().getId() != null;
     }
 }
