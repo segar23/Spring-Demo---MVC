@@ -1,5 +1,6 @@
 package com.mvc.springmvc.controllers;
 
+import com.mvc.springmvc.domain.Address;
 import com.mvc.springmvc.domain.Customer;
 import com.mvc.springmvc.services.CustomerService;
 import org.junit.Before;
@@ -116,11 +117,12 @@ public class CustomerControllerTest {
         returnCustomer.setLastName(lastName);
         returnCustomer.setEmail(email);
         returnCustomer.setPhoneNumber(phoneNumber);
-        returnCustomer.setAddressLine1(addressLine1);
-        returnCustomer.setAddressLine2(addressLine2);
-        returnCustomer.setCity(city);
-        returnCustomer.setState(state);
-        returnCustomer.setZipCode(zipCode);
+        returnCustomer.setBillingAddress(new Address());
+        returnCustomer.getBillingAddress().setAddressLine1(addressLine1);
+        returnCustomer.getBillingAddress().setAddressLine2(addressLine2);
+        returnCustomer.getBillingAddress().setCity(city);
+        returnCustomer.getBillingAddress().setState(state);
+        returnCustomer.getBillingAddress().setZipCode(zipCode);
 
         when(customerService.saveOrUpdate(ArgumentMatchers.<Customer>any())).thenReturn(returnCustomer);
 
@@ -157,10 +159,10 @@ public class CustomerControllerTest {
         assertEquals(lastName, boundCustomer.getValue().getLastName());
         assertEquals(email, boundCustomer.getValue().getEmail());
         assertEquals(phoneNumber, boundCustomer.getValue().getPhoneNumber());
-        assertEquals(addressLine1, boundCustomer.getValue().getAddressLine1());
-        assertEquals(addressLine2, boundCustomer.getValue().getAddressLine2());
-        assertEquals(city, boundCustomer.getValue().getCity());
-        assertEquals(state, boundCustomer.getValue().getState());
-        assertEquals(zipCode, boundCustomer.getValue().getZipCode());
+        assertEquals(addressLine1, boundCustomer.getValue().getBillingAddress().getAddressLine1());
+        assertEquals(addressLine2, boundCustomer.getValue().getBillingAddress().getAddressLine2());
+        assertEquals(city, boundCustomer.getValue().getBillingAddress().getCity());
+        assertEquals(state, boundCustomer.getValue().getBillingAddress().getState());
+        assertEquals(zipCode, boundCustomer.getValue().getBillingAddress().getZipCode());
     }
 }

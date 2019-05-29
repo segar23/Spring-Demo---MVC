@@ -1,5 +1,6 @@
 package com.mvc.springmvc.bootstrap;
 
+import com.mvc.springmvc.domain.Address;
 import com.mvc.springmvc.domain.Customer;
 import com.mvc.springmvc.domain.Product;
 import com.mvc.springmvc.services.CustomerService;
@@ -78,7 +79,11 @@ public class SpringBootstrap implements ApplicationListener<ContextRefreshedEven
         customer1.setLastName("Garces");
         customer1.setPhoneNumber("7654133256");
         customer1.setEmail("segarces23");
-        customer1.setAddressLine1("2081 Malibu Dr");
+        customer1.setBillingAddress(new Address());
+        customer1.getBillingAddress().setAddressLine1("2081 Malibu Dr");
+        customer1.getBillingAddress().setCity("West Lafayette");
+        customer1.getBillingAddress().setState("IN");
+        customer1.getBillingAddress().setZipCode("47906");
 
         customerService.saveOrUpdate(customer1);
     }
