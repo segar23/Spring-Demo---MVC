@@ -23,6 +23,9 @@ public class User implements DomainObject{
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Customer customer;
 
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    private Cart cart;
+
 
     @Override
     public Integer getId() {
@@ -81,5 +84,14 @@ public class User implements DomainObject{
     public void setCustomer(Customer customer) {
         this.customer = customer;
         customer.setUser(this);
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+        cart.setUser(this);
     }
 }
