@@ -57,6 +57,7 @@ public class CustomerDAOImpl implements CustomerService {
 
         Customer savedCustomer = em.merge(domainObject);
         em.getTransaction().commit();
+        em.close();
 
         return savedCustomer;
     }
@@ -68,5 +69,6 @@ public class CustomerDAOImpl implements CustomerService {
         em.getTransaction().begin();
         em.remove(em.find(Customer.class, id));
         em.getTransaction().commit();
+        em.close();
     }
 }

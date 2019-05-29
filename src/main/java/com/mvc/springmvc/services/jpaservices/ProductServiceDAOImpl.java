@@ -42,6 +42,7 @@ public class ProductServiceDAOImpl implements ProductService {
         em.getTransaction().begin();
         Product savedProduct = em.merge(domainObject);
         em.getTransaction().commit();
+        em.close();
 
         return savedProduct;
     }
@@ -53,5 +54,6 @@ public class ProductServiceDAOImpl implements ProductService {
         em.getTransaction().begin();
         em.remove(em.find(Product.class, id));
         em.getTransaction().commit();
+        em.close();
     }
 }

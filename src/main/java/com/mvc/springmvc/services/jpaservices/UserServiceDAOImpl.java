@@ -55,6 +55,7 @@ public class UserServiceDAOImpl implements UserService {
         }
         User savedUser = em.merge(domainObject);
         em.getTransaction().commit();
+        em.close();
 
         return savedUser;
     }
@@ -66,5 +67,6 @@ public class UserServiceDAOImpl implements UserService {
         em.getTransaction().begin();
         em.remove(em.find(User.class, id));
         em.getTransaction().commit();
+        em.close();
     }
 }
