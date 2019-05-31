@@ -1,6 +1,7 @@
 package com.mvc.springmvc.domain;
 
 import javax.persistence.*;
+import java.time.Instant;
 
 @Entity
 public class User implements DomainObject{
@@ -19,6 +20,8 @@ public class User implements DomainObject{
 
     private String encryptedPassword;
     private Boolean enabled = true;
+    private Instant dateCreated;
+    private Instant dateUpdated;
 
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Customer customer;
@@ -93,5 +96,21 @@ public class User implements DomainObject{
     public void setCart(Cart cart) {
         this.cart = cart;
         cart.setUser(this);
+    }
+
+    public Instant getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Instant dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public Instant getDateUpdated() {
+        return dateUpdated;
+    }
+
+    public void setDateUpdated(Instant dateUpdated) {
+        this.dateUpdated = dateUpdated;
     }
 }

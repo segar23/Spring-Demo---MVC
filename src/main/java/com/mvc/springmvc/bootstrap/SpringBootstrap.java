@@ -1,16 +1,18 @@
 package com.mvc.springmvc.bootstrap;
 
-import com.mvc.springmvc.domain.Address;
-import com.mvc.springmvc.domain.Customer;
-import com.mvc.springmvc.domain.Product;
+import com.mvc.springmvc.domain.*;
 import com.mvc.springmvc.services.CustomerService;
+import com.mvc.springmvc.services.OrderService;
 import com.mvc.springmvc.services.ProductService;
+import com.mvc.springmvc.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class SpringBootstrap implements ApplicationListener<ContextRefreshedEvent> {
@@ -18,6 +20,10 @@ public class SpringBootstrap implements ApplicationListener<ContextRefreshedEven
     private ProductService productService;
 
     private CustomerService customerService;
+
+    private UserService userService;
+
+    private OrderService orderService;
 
     @Autowired
     public void setProductService(ProductService productService) {
@@ -29,6 +35,15 @@ public class SpringBootstrap implements ApplicationListener<ContextRefreshedEven
         this.customerService = customerService;
     }
 
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+    @Autowired
+    public void setOrderService(OrderService orderService) {
+        this.orderService = orderService;
+    }
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
@@ -84,6 +99,27 @@ public class SpringBootstrap implements ApplicationListener<ContextRefreshedEven
         customer1.getBillingAddress().setCity("West Lafayette");
         customer1.getBillingAddress().setState("IN");
         customer1.getBillingAddress().setZipCode("47906");
+
+        customer1.setUser(new User());
+        customer1.getUser().setUsername("segar23");
+        customer1.getUser().setPassword("pass69");
+
+        userService.saveOrUpdate(customer1.getUser());
+
+
+        CartDetail cartDetail1 = new CartDetail();
+
+        Product product1 = productService.getById(1);
+
+        cartDetail1.setProduct(product1);
+        cartDetail1.setQuantity(2);
+
+        List<CartDetail> cartDetails = new ArrayList<>();
+        cartDetails.add(cartDetail1);
+
+        customer1.getUser().setCart(new Cart());
+        customer1.getUser().getCart().setCartDetails(cartDetails);
+
 
         customerService.saveOrUpdate(customer1);
     }

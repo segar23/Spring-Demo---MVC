@@ -26,10 +26,15 @@ public class Customer implements DomainObject{
     @OneToOne(cascade = CascadeType.PERSIST)
     private User user;
 
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    private Order order;
+
+    @Override
     public Integer getId() {
         return id;
     }
 
+    @Override
     public void setId(Integer id) {
         this.id = id;
     }

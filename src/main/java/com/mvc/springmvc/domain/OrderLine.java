@@ -1,10 +1,10 @@
 package com.mvc.springmvc.domain;
 
 import javax.persistence.*;
-import java.time.Instant;
+import java.util.List;
 
 @Entity
-public class CartDetail implements DomainObject {
+public class OrderLine implements DomainObject{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -14,14 +14,12 @@ public class CartDetail implements DomainObject {
     private Integer version;
 
     @ManyToOne
-    private Cart cart;
+    private Order order;
 
     @OneToOne
     private Product product;
-
     private Integer quantity;
-    private Instant dateCreated;
-    private Instant dateUpdated;
+
 
     @Override
     public Integer getId() {
@@ -41,12 +39,12 @@ public class CartDetail implements DomainObject {
         this.version = version;
     }
 
-    public Cart getCart() {
-        return cart;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setCart(Cart cart) {
-        this.cart = cart;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     public Product getProduct() {
@@ -63,21 +61,5 @@ public class CartDetail implements DomainObject {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
-    }
-
-    public Instant getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(Instant dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-
-    public Instant getDateUpdated() {
-        return dateUpdated;
-    }
-
-    public void setDateUpdated(Instant dateUpdated) {
-        this.dateUpdated = dateUpdated;
     }
 }

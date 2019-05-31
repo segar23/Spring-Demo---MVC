@@ -2,6 +2,7 @@ package com.mvc.springmvc.domain;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.Instant;
 
 @Entity
 public class Product implements DomainObject{
@@ -16,6 +17,8 @@ public class Product implements DomainObject{
     private String description;
     private BigDecimal price;
     private String imageUrl;
+    private Instant dateCreated;
+    private Instant dateUpdated;
 
     public Integer getId() {
         return id;
@@ -55,5 +58,21 @@ public class Product implements DomainObject{
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public Instant getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Instant dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public Instant getDateUpdated() {
+        return dateUpdated;
+    }
+
+    public void setDateUpdated(Instant dateUpdated) {
+        this.dateUpdated = dateUpdated;
     }
 }
