@@ -1,54 +1,28 @@
 package com.mvc.springmvc.domain;
 
+import com.mvc.springmvc.enums.OrderStatus;
+
 import javax.persistence.*;
-import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "order_table")
-public class Order implements DomainObject{
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-
-    @Version
-    private Integer version;
+public class Order extends AbstractDomainClass {
 
     @OneToOne
     private Customer customer;
 
+    @Embedded
     private Address shippingAddress;
-    private Status status;
-    private Instant dateCreated;
-    private Instant dateUpdated;
-    private Instant dateShipped;
+
+    private OrderStatus status;
+
+    private Date dateShipped;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "order", orphanRemoval = true)
-    List<OrderLine> orderLines = new ArrayList<>();
-
-    enum Status {
-        NEW, ALLOCATED, SHIPPED
-    }
-
-    @Override
-    public Integer getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
+    List<OrderDetail> orderDetails = new ArrayList<>();
 
     public Customer getCustomer() {
         return customer;
@@ -66,53 +40,37 @@ public class Order implements DomainObject{
         this.shippingAddress = shippingAddress;
     }
 
-    public Instant getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(Instant dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-
-    public Instant getDateUpdated() {
-        return dateUpdated;
-    }
-
-    public void setDateUpdated(Instant dateUpdated) {
-        this.dateUpdated = dateUpdated;
-    }
-
-    public Instant getDateShipped() {
-        return dateShipped;
-    }
-
-    public void setDateShipped(Instant dateShipped) {
-        this.dateShipped = dateShipped;
-    }
-
-    public Status getStatus() {
+    public OrderStatus getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(OrderStatus status) {
         this.status = status;
     }
 
-    public List<OrderLine> getOrderLines() {
-        return orderLines;
+    public List<OrderDetail> getOrderDetails() {
+        return orderDetails;
     }
 
-    public void setOrderLines(List<OrderLine> orderLines) {
-        this.orderLines = orderLines;
+    public void setOrderDetails(List<OrderDetail> orderDetails) {
+        this.orderDetails = orderDetails;
     }
 
-    public void addOrderLine (OrderLine orderLine){
-        orderLines.add(orderLine);
-        orderLine.setOrder(this);
+    public void addOrderDetails (OrderDetail orderDetail){
+        orderDetails.add(orderDetail);
+        orderDetail.setOrder(this);
     }
 
-    public void removeOderLine (OrderLine orderLine){
-        orderLine.setOrder(null);
-        orderLines.remove(orderLine);
+    public void removeOderDetails (OrderDetail orderDetail){
+        orderDetail.setOrder(null);
+        orderDetails.remove(orderDetail);
+    }
+
+    public Date getDateShipped() {
+        return dateShipped;
+    }
+
+    public void setDateShipped(Date dateShipped) {
+        this.dateShipped = dateShipped;
     }
 }

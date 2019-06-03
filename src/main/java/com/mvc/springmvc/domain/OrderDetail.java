@@ -1,43 +1,19 @@
 package com.mvc.springmvc.domain;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
-public class OrderLine implements DomainObject{
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-
-    @Version
-    private Integer version;
+public class OrderDetail extends AbstractDomainClass {
 
     @ManyToOne
     private Order order;
 
     @OneToOne
     private Product product;
+
     private Integer quantity;
-
-
-    @Override
-    public Integer getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
 
     public Order getOrder() {
         return order;

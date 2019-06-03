@@ -1,6 +1,7 @@
 package com.mvc.springmvc.bootstrap;
 
 import com.mvc.springmvc.domain.*;
+import com.mvc.springmvc.enums.OrderStatus;
 import com.mvc.springmvc.services.CustomerService;
 import com.mvc.springmvc.services.OrderService;
 import com.mvc.springmvc.services.ProductService;
@@ -47,8 +48,42 @@ public class SpringBootstrap implements ApplicationListener<ContextRefreshedEven
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-        loadCustomers();
+        loadUsersAndCustomers();
         loadProducts();
+        loadCarts();
+        loadOrderHistory();
+    }
+
+    public void loadOrderHistory() {
+        List<User> users = (List<User>) userService.listAll();
+        List<Product> products = (List<Product>) productService.listAll();
+
+        users.forEach(user -> {
+            Order order = new Order();
+            order.setCustomer(user.getCustomer());
+            order.setStatus(OrderStatus.SHIPPED);
+
+            products.forEach(product -> {
+                OrderDetail orderDetail = new OrderDetail();
+                orderDetail.setProduct(product);
+                orderDetail.setQuantity(1);
+                order.addOrderDetails(orderDetail);
+            });
+        });
+    }
+
+    public void loadCarts() {
+        List<User> users = (List<User>) userService.listAll();
+        List<Product> products = (List<Product>) productService.listAll();
+
+        users.forEach(user -> {
+            user.setCart(new Cart());
+            CartDetail cartDetail = new CartDetail();
+            cartDetail.setProduct(products.get(0));
+            cartDetail.setQuantity(2);
+            user.getCart().addCardDetail(cartDetail);
+            userService.saveOrUpdate(user);
+        });
     }
 
     public void loadProducts() {
@@ -88,7 +123,11 @@ public class SpringBootstrap implements ApplicationListener<ContextRefreshedEven
         productService.saveOrUpdate(product5);
     }
 
-    public void loadCustomers() {
+    public void loadUsersAndCustomers() {
+        User user1 = new User();
+        user1.setUsername("segar23");
+        user1.setPassword("pass69");
+
         Customer customer1 = new Customer();
         customer1.setFirstName("Sebastian");
         customer1.setLastName("Garces");
@@ -99,28 +138,20 @@ public class SpringBootstrap implements ApplicationListener<ContextRefreshedEven
         customer1.getBillingAddress().setCity("West Lafayette");
         customer1.getBillingAddress().setState("IN");
         customer1.getBillingAddress().setZipCode("47906");
+        user1.setCustomer(customer1);
 
-        customer1.setUser(new User());
-        customer1.getUser().setUsername("segar23");
-        customer1.getUser().setPassword("pass69");
+        userService.saveOrUpdate(user1);
 
-        userService.saveOrUpdate(customer1.getUser());
+        User user2 = new User();
+        user2.setUsername("hserlin");
+        user2.setPassword("pupsnphd");
 
+        Customer customer2 = new Customer();
+        customer2.setFirstName("Hannah");
+        customer2.setLastName("Serlin");
 
-        CartDetail cartDetail1 = new CartDetail();
+        user2.setCustomer(customer2);
 
-        Product product1 = productService.getById(1);
-
-        cartDetail1.setProduct(product1);
-        cartDetail1.setQuantity(2);
-
-        List<CartDetail> cartDetails = new ArrayList<>();
-        cartDetails.add(cartDetail1);
-
-        customer1.getUser().setCart(new Cart());
-        customer1.getUser().getCart().setCartDetails(cartDetails);
-
-
-        customerService.saveOrUpdate(customer1);
+        userService.saveOrUpdate(user2);
     }
 }

@@ -4,14 +4,7 @@ import javax.persistence.*;
 import java.time.Instant;
 
 @Entity
-public class CartDetail implements DomainObject {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-
-    @Version
-    private Integer version;
+public class CartDetail extends AbstractDomainClass {
 
     @ManyToOne
     private Cart cart;
@@ -20,26 +13,7 @@ public class CartDetail implements DomainObject {
     private Product product;
 
     private Integer quantity;
-    private Instant dateCreated;
-    private Instant dateUpdated;
 
-    @Override
-    public Integer getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
 
     public Cart getCart() {
         return cart;
@@ -63,21 +37,5 @@ public class CartDetail implements DomainObject {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
-    }
-
-    public Instant getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(Instant dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-
-    public Instant getDateUpdated() {
-        return dateUpdated;
-    }
-
-    public void setDateUpdated(Instant dateUpdated) {
-        this.dateUpdated = dateUpdated;
     }
 }

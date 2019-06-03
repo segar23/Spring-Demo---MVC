@@ -1,17 +1,12 @@
 package com.mvc.springmvc.domain;
 
-import javax.persistence.*;
-import java.time.Instant;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 @Entity
-public class User implements DomainObject{
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-
-    @Version
-    private Integer version;
+public class User extends AbstractDomainClass{
 
     private String username;
 
@@ -20,8 +15,6 @@ public class User implements DomainObject{
 
     private String encryptedPassword;
     private Boolean enabled = true;
-    private Instant dateCreated;
-    private Instant dateUpdated;
 
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Customer customer;
@@ -29,24 +22,6 @@ public class User implements DomainObject{
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private Cart cart;
 
-
-    @Override
-    public Integer getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
 
     public String getUsername() {
         return username;
@@ -96,21 +71,5 @@ public class User implements DomainObject{
     public void setCart(Cart cart) {
         this.cart = cart;
         cart.setUser(this);
-    }
-
-    public Instant getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(Instant dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-
-    public Instant getDateUpdated() {
-        return dateUpdated;
-    }
-
-    public void setDateUpdated(Instant dateUpdated) {
-        this.dateUpdated = dateUpdated;
     }
 }
